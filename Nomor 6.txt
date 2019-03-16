@@ -1,0 +1,84 @@
+Database MySQL
+
+1. Membuat schema `gudang`
+CREATE DATABASE `gudang`;
+
+2. Membuat tabel categories
+CREATE TABLE `categories` (
+
+  `id` int(11) NOT NULL,
+
+  `name` varchar(50) NOT NULL,
+
+  PRIMARY KEY (`id`),
+
+  UNIQUE KEY `name_UNIQUE` (`name`),
+
+  UNIQUE KEY `id_UNIQUE` (`id`)
+)
+
+3. Membuat tabel products
+CREATE TABLE `products` (
+
+  `id` int(11) NOT NULL,
+
+  `name` varchar(50) NOT NULL,
+
+  `category_id` int(11) NOT NULL,
+
+  PRIMARY KEY (`id`),
+
+  UNIQUE KEY `name_UNIQUE` (`name`),
+
+  UNIQUE KEY `id_UNIQUE` (`id`),
+
+  KEY `category_id` (`category_id`),
+
+  CONSTRAINT `products_ibfk_1`
+  FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
+  ON DELETE RESTRICT ON UPDATE RESTRICT
+)
+
+4. Insert categories
+INSERT INTO `gudang`.`categories`
+(`id`,`name`)
+VALUES(1,"Peralatan Mandi");
+
+INSERT INTO `gudang`.`categories`
+(`id`,`name`)
+VALUES(2,"Mie Instan");
+
+INSERT INTO `gudang`.`categories`
+(`id`,`name`)
+VALUES(3,"Olahan Daging");
+
+5. Insert products
+INSERT INTO `gudang`.`products`
+(`id`,`name`,`category_id`)
+VALUES (1,"Sampo",1);
+
+INSERT INTO `gudang`.`products`
+(`id`,`name`,`category_id`)
+VALUES (2,"Sikat Gigi",2);
+
+INSERT INTO `gudang`.`products`
+(`id`,`name`,`category_id`)
+VALUES (3,"Indomi",2);
+
+INSERT INTO `gudang`.`products`
+(`id`,`name`,`category_id`)
+VALUES (4,"mie sedap",3);
+
+INSERT INTO `gudang`.`products`
+(`id`,`name`,`category_id`)
+VALUES (5,"Nuget",3);
+
+6. Query SQL
+SELECT c.`id`,c.`name` as product_name,
+p.`name` as products
+
+FROM `gudang`.`categories` AS c,
+`gudang`.`products` AS p
+
+WHERE c.`id`=p.`category_id` 
+ORDER BY c.`id`;
